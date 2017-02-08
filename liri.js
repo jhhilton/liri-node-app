@@ -12,6 +12,9 @@ switch (procedure) {
     case 'spotify':
         spotifyThis(value);
         break;
+    case 'movie':
+    	movieThis(value);
+    	break;
 }
 
 function getTweets(){
@@ -43,7 +46,7 @@ client.get('statuses/user_timeline', params, function(error, tweets, response) {
 
 function spotifyThis(value) {
     if (value == null) {
-        value = 'Helpless';
+        value = 'The Sign Ace of Base';
     }
     request('https://api.spotify.com/v1/search?q=' + value + '&type=track', function(error, response, body) {
         if (!error && response.statusCode == 200) {
@@ -57,3 +60,23 @@ function spotifyThis(value) {
         }
     });
 } 
+
+function movieThis(value){
+
+	if (value == null){
+		value = 'Mr. Nobody';
+	}
+	request('https://api.themoviedb.org/3/search/movie?api_key=b769da0052b0e07bbf3f2fb2f831c0c3&query=' + value, function(error,response,body){
+		if (!error && response.statusCode == 200){
+            jsonBody = JSON.parse(body);
+            console.log('--------');
+			console.log('Title: ' + jsonBody.results[0].original_title);
+			console.log('Overview: ' + jsonBody.results[0].overview);
+			console.log('Year Released: ' + jsonBody.results[0].release_date.substring(0,4));
+			console.log('Average Rating: ' + jsonBody.results[0].vote_average);
+			console.log('--------');
+		}
+
+
+	})
+}
