@@ -15,6 +15,9 @@ switch (procedure) {
     case 'movie':
     	movieThis(value);
     	break;
+   	case 'random':
+    	readFile();
+    	break;
 }
 
 function getTweets(){
@@ -79,4 +82,27 @@ function movieThis(value){
 
 
 	})
+}
+
+function readFile(){
+
+	// fs.readFile("random.txt", "utf8", function(error, value) {
+ //  	spotifyThis(value);
+
+	// });
+
+	    fs.readFile('random.txt', 'utf8', function(error, data) {
+        if (error) {
+            console.log(error);
+        } else {
+            var dataArr = data.split(',');
+            if (dataArr[0] === 'spotify') {
+                spotifyThis(dataArr[1]);
+            }
+            if (dataArr[0] === 'movie') {
+                movieThis(dataArr[1]);
+            }
+        }
+    });
+
 }
